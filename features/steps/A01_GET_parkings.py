@@ -33,7 +33,7 @@ def step_impl(context):
         print(response_data.status_code)
 
         response_json = json.loads(response_data.text)
-        access_Token = response_json['data']['tooken']
+        access_Token = response_json['data']['token']
         print(ID + " - accessToken >>> " + access_Token)
         resp = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
         print(resp)
@@ -45,7 +45,7 @@ def step_impl(context):
 
 
 @when('A01.01 - access Token를 이용하여 GET parkings API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.')
-def step_impl(context, groupId, category, paymentTime, paymentMethod, rightType, billingStartDay, billingEndDay):
+def step_impl(context):
     #try:
 
     #except Exception as e:
@@ -55,8 +55,8 @@ def step_impl(context, groupId, category, paymentTime, paymentMethod, rightType,
     assert True
 
 
-@then('A01.01 - 전달받은 response data 결과중 "<uid>", "<platenumber>"의 정보가 포함된 내용이 있어야 한다.')
-def step_impl(context):
+@then('A01.01 - 전달받은 response data 결과중 "{uid}", "{platenumber}"의 정보가 포함된 내용이 있어야 한다.')
+def step_impl(context, uid, platenumber):
     #try:
 
     #except Exception as e:
