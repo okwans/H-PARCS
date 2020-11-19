@@ -1,0 +1,8 @@
+{
+  "name": "HPARCS - API Test",
+  "description": "HPARCS - API Test",
+  "version": "Ver 0.9",
+  "dependencies": {
+    "cucumber-html-reporter": "^5.2.0"
+  }
+}
