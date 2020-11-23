@@ -8,8 +8,8 @@ var c_time = today.toLocaleString();
 
 var options = {
         theme: 'bootstrap',
-        jsonFile: 'reports/cucumber.json',
-        output: 'reports/cucumber_HPARCS_ApiTest_report.html',
+        jsonFile: 'cucumber.json',
+        output: 'cucumber_HPARCS_ApiTest_report.html',
         reportSuiteAsScenarios: true,
         launchReport: false,
         metadata: {
