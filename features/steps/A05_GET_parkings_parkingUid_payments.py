@@ -9,9 +9,9 @@ ID = urlconfig.Test_ID
 PW = urlconfig.Test_PW
 
 ########################################################################################################
-# @A01_GET_parkings
-#   Scenario Outline: GET parkings 동작 확인
-@given('A01.01 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.')
+# @A05_GET_parkings_parkingUid_payments
+#   Scenario Outline: GET parkings/{parkingUid}/payments 동작 확인
+@given('A05.01 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.')
 def step_impl(context):
     try:
         # API 동작에 필요한 Token 설정 진행 #################################################
@@ -44,8 +44,8 @@ def step_impl(context):
     assert (response_data.status_code == 200)
 
 
-@when('A01.01 - access Token를 이용하여 GET parkings API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.')
-def step_impl(context):
+@when('A05.01 - access Token를 이용하여 GET parkings/{"{parkingUid}"}/payments API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.')
+def step_impl(context, parkingUid):
     try:
         global REP_Data
 
@@ -53,7 +53,7 @@ def step_impl(context):
             "Authorization": "Bearer " + access_Token
         }
 
-        Test_URL = api + "/parkings"
+        Test_URL = api + "/parkings/" + parkingUid + "/payments"
         response_data = requests.get(Test_URL, headers=headers)
         REP_Data = json.loads(response_data.text)
         # print(response_data.content)
@@ -76,30 +76,23 @@ def step_impl(context):
     assert Test_Result
 
 
-@then('A01.01 - 전달받은 response data 결과중 "{uid}", "{plateNumber}"의 정보가 포함된 내용이 있어야 한다.')
-def step_impl(context, uid, plateNumber):
-    try:
-        response_data = REP_Data['data']['rows']
-        pass_counter = 0
+@then('A05.01 - 전달받은 response data 결과와 "{payMethodName}", "{uid}", "{payMethod}", "{fare}"의 정보는 동일 해야 한다.')
+def step_impl(context, payMethodName, uid, payMethod, fare):
+    #try:
+    response_data = REP_Data['data'][0]
 
-        for targetData in response_data:
-            #print(targetData['uid'])
-            #print(targetData['plateNumber'])
-            if targetData['uid'] == int(uid) and targetData['plateNumber'] == plateNumber:
-                print("### Matched Data! ###")
-                result = json.dumps(targetData, indent=4, sort_keys=False, ensure_ascii=False)
-                print(result)
-                pass_counter = 1
-
-        if pass_counter == 1:
-            print("### Test Pass ###")
-            Test_Result = True
-        else:
-            print("### Test Fail ###")
-            Test_Result = False
-    except Exception as e:
-        print(e)
+    if response_data['payMethodName'] == payMethodName and response_data['uid'] == int(uid) and response_data['payMethod'] == int(payMethod) and response_data['fare'] == int(fare):
+        print("### Matched Data! ###")
+        print("### Test Pass ###")
+        Test_Result = True
+    else:
+        print("### Test Fail ###")
         Test_Result = False
+    result = json.dumps(REP_Data['data'][0], indent=4, sort_keys=False, ensure_ascii=False)
+    print(result)
+    #except Exception as e:
+    #    print(e)
+    #    Test_Result = False
 
     assert Test_Result
 

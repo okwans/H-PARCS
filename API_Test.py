@@ -8,51 +8,50 @@ import urllib.request
 #from bs4 import BeautifulSoup
 #from web_handle import *
 
-
 api = urlconfig.Test_API_URL
-auth_key = urlconfig.Test_Auth
-access_key = auth_key
-WebBrowser = []
+ID = urlconfig.Test_ID
+PW = urlconfig.Test_PW
 
-print(" /billing-service/v1/paymentMethodInfo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-#print(access_key)
+Token_URL = api + "/auth/login"
+
+print('User Token url = ' + Token_URL)
+
 headers = {
-	"Authorization": access_key
-}
-params = {
-	"Authorization": access_key
+    'Content-Type': 'application/json'
 }
 
+data = {
+    "id": ID,
+    "password": PW
+}
 
-#api_url = "https://api-staging.raidea.io" + "/billing-service/v1/paymentMethodInfo"
-api_url = "https://api-staging.raidea.io" + "/booking-service/carPlat/v1/coDrivers"
-print('GET url = ' + api_url)
-
-response_data = requests.get(api_url, headers=headers)
-
+response_data = requests.post(Token_URL, headers=headers, data=json.dumps(data))
 print(response_data.status_code)
+
 response_json = json.loads(response_data.text)
-oks = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
+access_Token = response_json['data']['token']
+print(ID + " - accessToken >>> " + access_Token)
+resp = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
+print(resp)
 #print(oks)
 #print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
-for temp in response_json['result']['data']:
-    if(temp['groupId'] == "API_TEST1" or temp['groupId'] == "API_TEST2" or temp['groupId'] == "API_TEST3" or temp['groupId'] == "API_TEST4"):
-        #oks = json.dumps(temp, indent=4, sort_keys=False, ensure_ascii=False)
-        #print(oks)
-        api_url = "https://api-staging.raidea.io" + "/booking-service/carPlat/v1/coDrivers/" + temp['coDriverId']
-        response_data = requests.get(api_url, headers=headers)
-        response_json = json.loads(response_data.text)
-        oks = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
-        print(oks)
-        print("===========================================================================================")
-        response_data = requests.delete(api_url, headers=headers)
-        response_json = json.loads(response_data.text)
-        oks = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
-        print(oks)
-        #print("delete >>> " + response_data.text)
-    else:
-        print("not found!")
+
+headers = {
+            "Authorization": "Bearer " + access_Token
+        }
+
+params = {
+    "carId": "03-4735"
+}
+
+test_URL = "http://localhost:3000/api/parkings/1926/payments"
+#response_data = requests.get(test_URL, headers=headers, params=params)
+response_data = requests.get(test_URL, headers=headers)
+response_json = json.loads(response_data.text)
+#print(response_data.content)
+oks = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
+print(oks)
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
