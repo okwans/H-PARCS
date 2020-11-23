@@ -33,7 +33,7 @@ def step_impl(context):
         print(response_data.status_code)
 
         response_json = json.loads(response_data.text)
-        access_Token = response_json['data']['tooken']
+        access_Token = response_json['data']['token']
         print(ID + " - accessToken >>> " + access_Token)
         resp = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
         print(resp)
@@ -45,23 +45,54 @@ def step_impl(context):
 
 
 @when('A01.01 - access Token를 이용하여 GET parkings API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.')
-def step_impl(context, groupId, category, paymentTime, paymentMethod, rightType, billingStartDay, billingEndDay):
-    #try:
-
-    #except Exception as e:
-    #    print(e)
-    #    Test_Result = False
-
-    assert True
-
-
-@then('A01.01 - 전달받은 response data 결과중 "<uid>", "<platenumber>"의 정보가 포함된 내용이 있어야 한다.')
 def step_impl(context):
-    #try:
+    try:
+        global REP_Data
 
+        headers = {
+            "Authorization": "Bearer " + access_Token
+        }
+
+        Test_URL = api + "/parkings"
+        response_data = requests.get(Test_URL, headers=headers)
+        REP_Data = json.loads(response_data.text)
+        # print(response_data.content)
+        #oks = json.dumps(REP_Data, indent=4, sort_keys=False, ensure_ascii=False)
+        #print(oks)
+
+        Test_Result = True
+
+    except Exception as e:
+        print(e)
+        Test_Result = False
+
+    assert Test_Result
+
+
+@then('A01.01 - 전달받은 response data 결과중 "{uid}", "{plateNumber}"의 정보가 포함된 내용이 있어야 한다.')
+def step_impl(context, uid, plateNumber):
+    #try:
+    response_data = REP_Data['data']['rows']
+    pass_counter = 0
+
+    for targetData in response_data:
+        #print(targetData['uid'])
+        #print(targetData['plateNumber'])
+        if targetData['uid'] == int(uid) and targetData['plateNumber'] == plateNumber:
+            print("### Matched Data! ###")
+            result = json.dumps(targetData, indent=4, sort_keys=False, ensure_ascii=False)
+            print(result)
+            pass_counter = 1
+
+    if pass_counter == 1:
+        print("### Test Pass ###")
+        Test_Result = True
+    else:
+        print("### Test Fail ###")
+        Test_Result = False
     #except Exception as e:
     #    print(e)
     #    Test_Result = False
 
-    assert True
+    assert Test_Result
 
