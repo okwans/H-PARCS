@@ -1,5 +1,5 @@
-@api
-@parking
+#@api
+#@parking
 Feature: PUT_parkings_uid
 
   @A03_PUT_parkings_uid

@@ -1,5 +1,5 @@
-@api
-@parking
+#@api
+#@parking
 Feature: GET_parkings_parkingUid_payments
 
   @A05_GET_parkings_parkingUid_payments

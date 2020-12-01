@@ -1,8 +1,8 @@
-#@api
-#@parking
-Feature: GET_parkings
+@api
+@parking_manager
+Feature: 주차장_관리자_기능동작_확인
 
-  @A01_GET_parkings
+  @B03_주차장_관리자_기능동작_확인
   Scenario Outline: GET parkings 동작 확인
     Given A01.01 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.
     When A01.01 - access Token를 이용하여 GET parkings API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.

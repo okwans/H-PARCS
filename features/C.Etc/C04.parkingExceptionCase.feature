@@ -1,6 +1,6 @@
-#@api
-#@parking
-Feature: GET_parkings
+@api
+@parking
+Feature: 주차장_ExceptionCase_확인
 
   @A01_GET_parkings
   Scenario Outline: GET parkings 동작 확인

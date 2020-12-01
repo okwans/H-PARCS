@@ -1,6 +1,6 @@
-#@api
-#@parking
-Feature: GET_parkings
+@api
+@parking_paymentsUpdate
+Feature: 주차장_결재정산_동작_확인
 
   @A01_GET_parkings
   Scenario Outline: GET parkings 동작 확인
