@@ -2,11 +2,22 @@
 @parking_terminals
 Feature: 주차장_단말기_확인
 
-  @C01_주차장_단말기
-  Scenario Outline: GET parkings 동작 확인
-    Given A01.01 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.
-    When A01.01 - access Token를 이용하여 GET parkings API 동작을 수행 후, response data를 정상적으로 전달 받아야 한다.
-    Then A01.01 - 전달받은 response data 결과중 "<uid>", "<plateNumber>"의 정보가 포함된 내용이 있어야 한다.
+  @C01.01.주차장_단말기
+  Scenario: 주차장 단말기 상태 check 동작 확인
+    Given C01.01 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.
+    When C01.01 - access Token를 이용하여 개별 단말기의 상태 check 동작을 수행한다.
+    Then C01.01 - 전달받은 response data를 이용하여 개별 단말기의 정상 동작 유무를 확인한다.
+
+  @C01.02.주차장_단말기
+  Scenario Outline: 주차장 차단기 Open/Close 동작 확인
+    Given C01.02 - API Test를 위한 서버가 준비되어 있고 ID, PW를 이용하여 access Token 데이터를 전달 받았다.
+    When C01.02 - access Token를 이용하여 개별 차단기 "<terminalId>"의 "<gate>" 동작을 수행한다.
+    Then C01.02 - 전달받은 response data를 이용하여 개별 차단기 "<terminalId>"의 "<gate>"의 정상 동작 유무를 확인한다.
     Examples: API_Data
-    | uid        | plateNumber |
-    | 14         | 20하9088    |
+    | terminalId | gate  |
+    | 1          | open  |
+    | 2          | close |
+    | 3          | open  |
+    | 1          | close |
+    | 2          | open  |
+    | 3          | close |

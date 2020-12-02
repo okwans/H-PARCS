@@ -2,7 +2,7 @@
 @parking_seasonTickets
 Feature: 차량_입출차_동작_확인-정기권차량
 
-  @A02_01_차량_입출차_동작_확인-정기권차량
+  @A02.01.차량_입출차_동작_확인-정기권차량
   Scenario Outline: 차량 입출차 동작 확인(정기권 차량)
     Given A02.01 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
     When A02.01 - 차량 입고시간은 현재시간 기준 "<entryTime>"분 전에 입차되는 형태로 "<plateNumber>" 차량을 API를 통해 설정한다.
