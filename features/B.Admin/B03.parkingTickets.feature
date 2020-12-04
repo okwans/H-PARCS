@@ -27,7 +27,7 @@ Feature: 주차장_정기권_할인권_부여동작_확인
   @B03.03.주차장_정기권_할인권_부여동작_확인
   Scenario Outline: 주차장 관리 - 관리자 사전할인 차량 등록 기능 동작 확인
     Given B03.03 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B03.03 - API 동작을 통해 특정 차량 "<uid>", "<plateNumber>", "<userName>", "<company>", "<startDay>", "<endDay>"를 이용하여 사전할인 차량 등록을 수행한다.
+    When B03.03 - API 동작을 통해 특정 차량의 "<uid>", "<plateNumber>", "<userName>", "<company>", "<startDay>", "<endDay>"를 이용하여 사전할인 차량 등록을 수행한다.
     Then B03.03 - 해당 차량의 정보는 입력된 "<plateNumber>", "<userName>", "<company>", "<startDay>", "<endDay>"와 동일해야 한다.
     Examples: API_Data
     # 수동 출차 기능은 오직 출차가 완료되지 않은 차량에서만 가능

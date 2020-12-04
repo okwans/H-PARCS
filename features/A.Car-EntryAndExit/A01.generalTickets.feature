@@ -6,7 +6,7 @@ Feature: 차량_입출차_동작_확인-일반차량
   Scenario Outline: 차량 입출차 동작 확인(일반 차량)
     Given A01.01 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
     When A01.01 - 차량 입고시간은 현재시간 기준 "<entryTime>"분 전에 입차되는 형태로 "<plateNumber>" 차량을 API를 통해 설정한다.
-    Then A01.01 - 해당 차량이 출차시 주차시간이 회차시간 미만일 경우 요금 정산은 이뤄지지 않고 회차시간 이상일 경우 over되는 시간 만큼 요금 "<bill>"원을 결재해야 한다.
+    Then A01.01 - 해당 차량 출차시 주차시간이 회차시간 미만일 경우 요금 정산은 이뤄지지 않고 회차 시간 이상일 경우 over되는 시간 만큼 요금 "<bill>"원을 결재해야 한다.
     Examples: API_Data
     | plateNumber | entryTime | bill  |
     | 10하9088    | 25        | 0     |
