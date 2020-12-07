@@ -76,19 +76,30 @@ def step_impl(context):
     assert Test_Result
 
 
-@then('B01.01 - 전달 받은 data에는 "{plateNumber}", "{type}", "{status}"등의 차량 정보가 포함되어야 한다.')
-def step_impl(context, plateNumber, type, status):
+@then('B01.01 - 전달 받은 data에는 "{plateNumber}", "{parkingTypeName}", "{status}"등의 차량 정보가 포함되어야 한다.')
+def step_impl(context, plateNumber, parkingTypeName, status):
     #try:
     response_data = REP_Data['data']['rows']
+    outGateUid = (lambda x: None if x == "미출차" else x)(status)
+
     Test_Result = False
 
-    for Rep_data in response_data:
-        if Rep_data['plateNumber'] == plateNumber and Rep_data['type'] == type and Rep_data['status'] == status:
-            print("### Matched Data!!! ###")
-            result = json.dumps(Rep_data, indent=4, sort_keys=False, ensure_ascii=False)
-            print(result)
-            Test_Result = True
 
+    for Rep_data in response_data:
+        if Rep_data['plateNumber'] == plateNumber and Rep_data['parkingTypeName'] == parkingTypeName:
+            if outGateUid == None:
+                if Rep_data['outGateUid'] == outGateUid:
+                    print("### Matched Data!!! ###")
+                    result = json.dumps(Rep_data, indent=4, sort_keys=False, ensure_ascii=False)
+                    print(result)
+                    Test_Result = True
+                    break
+            else:
+                print("### Matched Data!!! ###")
+                result = json.dumps(Rep_data, indent=4, sort_keys=False, ensure_ascii=False)
+                print(result)
+                Test_Result = True
+                break
     #except Exception as e:
     #    print(e)
     #    Test_Result = False
@@ -135,22 +146,54 @@ def step_impl(context):
 @when('B01.02 - API 동작을 통해 특정 차량 "{uid}"를 이용하여 특정 차량의 주차 정보 상세 내역을 전달 받는다.')
 def step_impl(context, uid):
     try:
-        print("E")
+        global REP_Data
+
+        headers = {
+            "Authorization": "Bearer " + access_Token
+        }
+
+        Test_URL = api + "/parkings/" + uid
+        response_data = requests.get(Test_URL, headers=headers)
+        REP_Data = json.loads(response_data.text)
+        # print(response_data.content)
+        # oks = json.dumps(REP_Data, indent=4, sort_keys=False, ensure_ascii=False)
+        # print(oks)
+
+        if (response_data.status_code == 200):
+            print("### status-code : " + str(response_data.status_code))
+            print("### response data OK!")
+            Test_Result = True
+        else:
+            print("### status-code : " + str(response_data.status_code))
+            print("### response data Not OK!")
+            Test_Result = False
     except Exception as e:
         print(e)
 
     assert True
 
 
-@then('B01.02 - 전달 받은 data에는 "{plateNumber}", "{parkingTime}", "{entryTime}", "{exitTime}"등의 정보가 포함되어야 한다.')
-def step_impl(context, plateNumber, type, status):
+@then('B01.02 - 전달 받은 data에는 "{plateNumber}", "{parkingTimes}", "{inGateDate}", "{outGateDate}"등의 정보가 포함되어야 한다.')
+def step_impl(context, plateNumber, parkingTimes, inGateDate, outGateDate):
     #try:
+    response_data = REP_Data['data']
+
+    if response_data['plateNumber'] == plateNumber and response_data['bill']['parkingTimes'] == parkingTimes and response_data['inGateDate'] == inGateDate and response_data['outGateDate'] == outGateDate:
+        print("### Matched Data!!! ###")
+        result = json.dumps(response_data, indent=4, sort_keys=False, ensure_ascii=False)
+        print(result)
+        Test_Result = True
+    else:
+        print("### Test Fail!!! ###")
+        result = json.dumps(response_data, indent=4, sort_keys=False, ensure_ascii=False)
+        print(result)
+        Test_Result = False
 
     #except Exception as e:
     #    print(e)
     #    Test_Result = False
 
-    assert True
+    assert Test_Result
 
 
 # #####################################################################################################################
