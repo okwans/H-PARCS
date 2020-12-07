@@ -38,7 +38,7 @@ Feature: 관리자_주차장_운영정보_확인
   @B01.03.관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 관리자 수동 입차 기능 동작 확인
     Given B01.03 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B01.03 - API 동작을 통해 특정 차량 "<uid>"를 참고하여 수동 입차 기능을 이용 "<plateNumber>", "<entryTime>"정보를 수정한다.
+    When B01.03 - API 동작을 통해 특정 차량 "<uid>"를 참고하여 수동 입차 기능을 이용 "<plateNumber>", "<inGateDate>"정보를 수정한다.
     Then B01.03 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<inGateDate>"와 동일해야 한다.
     Examples: API_Data
     | uid | plateNumber | inGateDate       |
@@ -56,11 +56,11 @@ Feature: 관리자_주차장_운영정보_확인
   @B01.04.관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 관리자 수동 출차 기능 동작 확인
     Given B01.04 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B01.04 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 출차 기능을 통해 "<plateNumber>", "<exitTime>"정보를 수정한다.
-    Then B01.04 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<exitTime>"와 동일해야 한다.
+    When B01.04 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 출차 기능을 통해 "<plateNumber>", "<outGateDate>"정보를 수정한다.
+    Then B01.04 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<outGateDate>"와 동일해야 한다.
     Examples: API_Data
     # 수동 출차 기능은 오직 출차가 완료되지 않은 차량에서만 가능
-    | uid | plateNumber | outGateDate        |
+    | uid | plateNumber | outGateDate      |
     | 1   | 10호1111    | 2020-11-18 12:00 |
     | 2   | 10호2222    | 2020-11-18 12:00 |
     | 3   | 10호3333    | 2020-11-18 12:00 |
