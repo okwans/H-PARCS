@@ -8,15 +8,15 @@ Feature: 관리자_주차장_운영정보_확인
     When B01.01 - API 동작을 통해 주차관리: 입출차 내역을 전달 받는다.
     Then B01.01 - 전달 받은 data에는 "<plateNumber>", "<type>", "<status>"등의 차량 정보가 포함되어야 한다.
     Examples: API_Data
-    | plateNumber | type  | status |
+    | plateNumber | type    | status   |
     | 10하9088    | 방문차량 | 미출차   |
-    | 20하9099    | 등록차량 | 출차완료  |
+    | 20하9099    | 등록차량 | 출차완료 |
     | 30하1010    | 방문차량 | 미출차   |
-    | 40하8250    | 등록차량 | 출차완료  |
+    | 40하8250    | 등록차량 | 출차완료 |
     | 50하0102    | 방문차량 | 미출차   |
     | 60하7174    | 등록차량 | 미출차   |
-    | 70하1111    | 등록차량 | 출차완료  |
-    | 80하8888    | 방문차량 | 출차완료  |
+    | 70하1111    | 등록차량 | 출차완료 |
+    | 80하8888    | 방문차량 | 출차완료 |
     | 90하0001    | 방문차량 | 미출차   |
     | 10하9900    | 등록차량 | 미출차   |
 
@@ -41,7 +41,7 @@ Feature: 관리자_주차장_운영정보_확인
   @B01.03.관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 관리자 수동 입차 기능 동작 확인
     Given B01.03 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B01.03 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 입차 기능을 이용하여 "<plateNumber>", "<entryTime>"정보를 수정한다.
+    When B01.03 - API 동작을 통해 특정 차량 "<uid>"를 참고하여 수동 입차 기능을 이용 "<plateNumber>", "<entryTime>"정보를 수정한다.
     Then B01.03 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<entryTime>"와 동일해야 한다.
     Examples: API_Data
     | uid | plateNumber | entryTime       |
