@@ -79,7 +79,7 @@ def step_impl(context):
 @then('B01.01 - 전달 받은 data에는 "{plateNumber}", "{type}", "{status}"등의 차량 정보가 포함되어야 한다.')
 def step_impl(context, plateNumber, type, status):
     #try:
-    response_data = REP_Data['data'][0]
+    response_data = REP_Data['data']['rows']
     Test_Result = False
 
     for Rep_data in response_data:
