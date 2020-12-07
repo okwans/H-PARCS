@@ -23,7 +23,7 @@ Feature: 관리자_주차장_운영정보_확인
   @B01.02.관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 주차정보 상세 확인
     Given B01.02 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B01.02 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 주차 정보 상세 내역을 전달 받는다.
+    When B01.02 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 특정 차량의 주차 정보 상세 내역을 전달 받는다.
     Then B01.02 - 전달 받은 data에는 "<plateNumber>", "<parkingTime>", "<entryTime>", "<exitTime>"등의 정보가 포함되어야 한다.
     Examples: API_Data
     | uid | plateNumber | parkingTime | entryTime        | exitTime         |
@@ -42,7 +42,7 @@ Feature: 관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 관리자 수동 입차 기능 동작 확인
     Given B01.03 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
     When B01.03 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 입차 기능을 이용하여 "<plateNumber>", "<entryTime>"정보를 수정한다.
-    Then B01.03 - 해당 차량의 정보는 입력된 "<plateNumber>", "<entryTime>"와 동일해야 한다.
+    Then B01.03 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<entryTime>"와 동일해야 한다.
     Examples: API_Data
     | uid | plateNumber | entryTime       |
     | 1   | 10호1111    | 2020-11-18 12:00 |
@@ -59,8 +59,8 @@ Feature: 관리자_주차장_운영정보_확인
   @B01.04.관리자_주차장_운영정보_확인
   Scenario Outline: 주차장 관리 - 관리자 수동 출차 기능 동작 확인
     Given B01.04 - API Test를 위한 서버가 준비되어 있고 필요한 access Token 데이터를 전달 받았다.
-    When B01.04 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 출차 기능을 이용하여 "<plateNumber>", "<exitTime>"정보를 수정한다.
-    Then B01.04 - 해당 차량의 정보는 입력된 "<plateNumber>", "<exitTime>"와 동일해야 한다.
+    When B01.04 - API 동작을 통해 특정 차량 "<uid>"를 이용하여 수동 출차 기능을 통해 "<plateNumber>", "<exitTime>"정보를 수정한다.
+    Then B01.04 - 해당 차량의 수정된 정보는 입력된 "<plateNumber>", "<exitTime>"와 동일해야 한다.
     Examples: API_Data
     # 수동 출차 기능은 오직 출차가 완료되지 않은 차량에서만 가능
     | uid | plateNumber | exitTime        |

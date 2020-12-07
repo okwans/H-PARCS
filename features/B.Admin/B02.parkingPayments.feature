@@ -1,4 +1,4 @@
-@api_ing
+@api
 @parking_payments
 Feature: 주차장_결재내역_확인
 
