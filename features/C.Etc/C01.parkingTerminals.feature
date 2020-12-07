@@ -1,4 +1,4 @@
-@api
+@api_ing
 @parking_terminals
 Feature: 주차장_단말기_확인
 

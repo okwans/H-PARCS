@@ -1,4 +1,4 @@
-@api
+@api_ing
 @parking_discountTicketsControl
 Feature: 주차장_할인권_적용_확인
 

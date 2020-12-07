@@ -1,4 +1,4 @@
-@api
+@api_ing
 @parking_seasonTickets
 Feature: 차량_입출차_동작_확인-정기권차량
 

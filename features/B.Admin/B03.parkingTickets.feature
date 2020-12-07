@@ -1,4 +1,4 @@
-@api
+@api_ing
 @parking_tickets
 Feature: 주차장_정기권_할인권_부여동작_확인
 

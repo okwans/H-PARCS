@@ -1,4 +1,4 @@
-@api
+@api_ing
 @parking_discountCoupons
 Feature: 차량_입출차_동작_확인-할인권차량
 
