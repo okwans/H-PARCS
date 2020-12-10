@@ -2,7 +2,6 @@ import json
 import requests
 from behave import *
 from Config import *
-import urllib.request
 
 api = urlconfig.Test_API_URL
 ID = urlconfig.Test_ID

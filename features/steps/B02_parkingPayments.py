@@ -2,7 +2,6 @@ import json
 import requests
 from behave import *
 from Config import *
-import urllib.request
 
 api = urlconfig.Test_API_URL
 ID = urlconfig.Test_ID
@@ -44,8 +43,8 @@ def step_impl(context):
     assert (response_data.status_code == 200)
 
 
-@when('B02.01 - API 동작 동작시 "{paymentTime}" "{plateNumber}"를 이용하여 입출차 결재 내역을 확인한다.')
-def step_impl(context, paymentTime, plateNumber):
+@when('B02.01 - API 동작 동작시 "{uid}"를 이용하여 특정 차량의 입출차 결재 내역을 확인한다.')
+def step_impl(context, uid):
     try:
         global REP_Data
 
@@ -53,7 +52,7 @@ def step_impl(context, paymentTime, plateNumber):
             "Authorization": "Bearer " + access_Token
         }
 
-        Test_URL = api + "/parkings/" + parkingUid + "/payments"
+        Test_URL = api + "/parkings/" + uid + "/payments"
         response_data = requests.get(Test_URL, headers=headers)
         REP_Data = json.loads(response_data.text)
         # print(response_data.content)
@@ -76,12 +75,19 @@ def step_impl(context, paymentTime, plateNumber):
     assert Test_Result
 
 
-@then('B02.01 - 전달 받은 data에는 "{paymentTime}", "{plateNumber}"를 기준으로 관련 차량 정보가 출력 되어야 한다.')
-def step_impl(context, paymentTime, plateNumber):
+@then('B02.01 - 전달 받은 data에는 "{uid}", "{payDate}", "{fare}", "{cardCompany}" 등 관련 정보가 출력 되어야 한다.')
+def step_impl(context, uid, payDate, fare, cardCompany):
     #try:
     response_data = REP_Data['data'][0]
 
-    if response_data['payMethodName'] == payMethodName and response_data['uid'] == int(uid) and response_data['payMethod'] == int(payMethod) and response_data['fare'] == int(fare):
+    input_cardCompany = (lambda x: None if x == "-" else x)(cardCompany)
+
+    #print(str(response_data['parkingUid']) + " ||| " + str(uid))
+    #print(response_data['payDate'] + " ||| " + payDate)
+    #print(str(response_data['fare']) + " ||| " + str(fare))
+    #print(str(response_data['cardCompany']) + " ||| " + str(input_cardCompany))
+
+    if response_data['parkingUid'] == int(uid) and response_data['payDate'] == payDate and response_data['fare'] == int(fare) and response_data['cardCompany'] == input_cardCompany:
         print("### Matched Data! ###")
         print("### Test Pass ###")
         Test_Result = True
