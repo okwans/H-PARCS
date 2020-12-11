@@ -41,17 +41,27 @@ headers = {
             "Authorization": "Bearer " + access_Token
         }
 
-params = {
-    "carId": "03-4735"
-}
-
-test_URL = "http://localhost:3000/api/parkings/1926/payments"
-#response_data = requests.get(test_URL, headers=headers, params=params)
+test_URL = "http://localhost:3000/api/parkings"
 response_data = requests.get(test_URL, headers=headers)
-response_json = json.loads(response_data.text)
-#print(response_data.content)
-oks = json.dumps(response_json, indent=4, sort_keys=False, ensure_ascii=False)
-print(oks)
+print(response_data.status_code)
+All_vehivle = json.loads(response_data.text)
+
+uid_array = []
+count = 0
+plate = ["10하9088", "20하9099", "30하1010", "40하8250", "50하0102", "60하7174", "70하7174", "80하8888", "90하0001", "10하9900"]
+
+
+for temp in All_vehivle['data']['rows']:
+    if temp['plateNumber'] == plate[count]:
+        uid_array.append(temp['uid'])
+        count += 1
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+for oks in uid_array:
+    test_URL = "http://localhost:3000/api/parkings/" + str(oks)
+    response_data = requests.delete(test_URL, headers=headers)
+    print(response_data.status_code)
+    print("### Delete >>> " + str(oks))
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
