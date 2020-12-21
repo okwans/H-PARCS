@@ -32,6 +32,24 @@ class HandleWeb:
         driver.get(url)
         time.sleep(5)
 
+        try:
+            # Login 동작 수행
+            userID = driver.find_element_by_xpath('//*[@id="sc-login-form"]/div/div[1]/div/input')
+            userID.send_keys('humax')
+            time.sleep(1)
+
+            userPW = driver.find_element_by_xpath('//*[@id="sc-login-form"]/div/div[2]/div/input')
+            userPW.send_keys('humax@!')
+            time.sleep(1)
+
+            sign_in = driver.find_element_by_xpath('//*[@id="sc-login-form"]/div/div[3]/a')
+            sign_in.click()
+            time.sleep(2)
+
+            #driver.find_elements_
+        except:
+            print("error or already login completed")
+
         WebBrowser.append(driver)
         return True
 
