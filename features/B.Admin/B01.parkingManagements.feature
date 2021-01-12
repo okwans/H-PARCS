@@ -1,4 +1,4 @@
-@api_ing
+@api
 @parking_managements
 Feature: 관리자_주차장_운영정보_확인
 
